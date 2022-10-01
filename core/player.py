@@ -2,10 +2,12 @@ import time
 from pynput.keyboard import Key, Controller as KeyboardController
 from pynput.mouse import Button, Controller as MouseController
 import pyautogui as pt
+from enum import Enum
 
 from core.game import Game
 from core.game_object import GameObject
 from core import utils
+
 
 class Player:
     def __init__(self):
@@ -17,25 +19,25 @@ class Player:
     def move_up(self):
         print("move_up")
         self.keyboard.press(Key.up)
-        time.sleep(0.5)
+        time.sleep(0.2)
         self.keyboard.release(Key.up)
     
     def move_down(self):
         print("move_down")
         self.keyboard.press(Key.down)
-        time.sleep(0.5)
+        time.sleep(0.2)
         self.keyboard.release(Key.down)
     
     def move_left(self):
         print("move_left")
         self.keyboard.press(Key.left)
-        time.sleep(0.5)
+        time.sleep(0.2)
         self.keyboard.release(Key.left)
     
     def move_right(self):
         print("move_right")
         self.keyboard.press(Key.right)
-        time.sleep(0.5)
+        time.sleep(0.2)
         self.keyboard.release(Key.right)
 
     def accept(self):
@@ -66,6 +68,8 @@ class Player:
         
     def is_in_battle_mode(self):
         fight_menu1 = utils.locate_object(['fight', 'menu1.png'])
+        if len(fight_menu1.locations) > 0:
+            return 
         fight_menu2 = utils.locate_object(['fight', 'menu2.png'])
         return len(fight_menu1.locations) > 0 or len(fight_menu2.locations) > 0
 
@@ -95,5 +99,15 @@ class Player:
             pt.click(700, 1150)
             
 
-            
+class BattleMenu(Enum):
+    FIGHT = 1
+    BAG = 2
+    POKEMON = 3
+    RUN = 4
 
+
+class FightMenu(Enum):
+    MOVE1 = 1
+    MOVE2 = 2
+    MOVE3 = 3
+    MOVE4 = 4
